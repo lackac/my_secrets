@@ -1,0 +1,12 @@
+<h2><%= @user.name || @user.login %></h2>
+
+<dl>
+  <dt>Felhasználónév:</dt>
+  <dd><%= @user.login %></dd>
+  <dt>Regisztráció dátuma:</dt>
+  <dd><%= @user.created_at.strftime("%Y.%m.%d %H:%M") %></dd>
+<% if @user == current_user %>
+  <dt>Email:</dt>
+  <dd><%= @user.email %></dd>
+<% end %>
+</dl>

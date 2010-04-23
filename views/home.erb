@@ -1,0 +1,20 @@
+<h2>Főoldal</h2>
+
+<% unless logged_in? %>
+<form action="/login" method="POST">
+  <fieldset>
+    <legend>Bejelentkezés</legend>
+    <p>
+      <label for="user">Felhasználónév:</label>
+      <input type="text" id="user" name="user" />
+    </p>
+    <p>
+      <label for="pass">Jelszó:</label>
+      <input type="password" id="pass" name="pass" />
+    </p>
+    <p><input type="submit" value="Mehet" /></p>
+  </fieldset>
+</form>
+<% else %>
+<p><a href="/logout">Kijelentkezés</a></p>
+<% end %>

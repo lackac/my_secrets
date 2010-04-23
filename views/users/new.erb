@@ -1,0 +1,11 @@
+<h2>Regisztráció</h2>
+
+<form action="/users" method="post">
+  <%= form_field "Felhasználónév", @user, :login %>
+  <%= form_field "Jelszó", @user, :password, :password %>
+  <%= form_field "Jelszó még egyszer", @user, :password_confirmation, :password %>
+  <%= form_field "Email", @user, :email %>
+  <%= form_field "Keresztnév", @user, :first_name %>
+  <%= form_field "Vezetéknév", @user, :last_name %>
+  <p><input type="submit" value="Mehet"/></p>
+</form>
