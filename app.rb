@@ -3,7 +3,7 @@ require 'sinatra'
 require 'erb'
 
 require 'sequel'
-DB = Sequel.sqlite("app.db")
+DB = Sequel.connect(ENV['DATABASE_URL'] || "sqlite://app.db")
 Sequel::Model.strict_param_setting = false
 require 'user'
 
