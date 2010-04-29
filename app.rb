@@ -6,6 +6,7 @@ require 'sequel'
 DB = Sequel.connect(ENV['DATABASE_URL'] || "sqlite://app.db")
 Sequel::Model.strict_param_setting = false
 require 'user'
+require 'secret'
 
 require 'helpers'
 
@@ -129,3 +130,74 @@ get "/logout" do
   session[:notice] = "Sikeres kijelentkezés!"
   redirect "/"
 end
+
+get "/secrets/?" do
+  require_user
+  @secrets = Secret.filter(:user_id => current_user.id)
+  erb :"secrets/index"
+end
+
+get "/secrets/new" do
+  require_user
+  @secret = Secret.new(params[:secret] || {})
+  erb :"secrets/new"
+end
+
+post "/secrets" do
+  require_user
+  begin
+    @secret = Secret.new(params[:secret] || {})
+    @secret.user_id = current_user.id
+    @secret.save
+    session[:notice] = "Biztonságosan lejegyezted a kis titkodat..."
+    redirect "/secrets/#{@secret.id}"
+  rescue Sequel::ValidationFailed
+    session[:error] = "Hiba az űrlapban"
+    erb :"secrets/new"
+  end
+end
+
+get "/secrets/:id" do
+  require_user
+  not_found unless @secret = Secret[params[:id]]
+  error(403, "Nincs ehhez jogosultságod") unless @secret.allowed_to_view?(current_user)
+  erb :"secrets/show"
+end
+
+get "/secrets/:id/edit" do
+  require_user
+  not_found unless @secret = Secret[params[:id]]
+  error(403, "Nincs ehhez jogosultságod") unless @secret.allowed_to_update?(current_user)
+  erb :"secrets/edit"
+end
+
+put "/secrets/:id" do
+  require_user
+  not_found unless @secret = Secret[params[:id]]
+  error(403, "Nincs ehhez jogosultságod") unless @secret.allowed_to_update?(current_user)
+  begin
+    @secret.update(params[:secret])
+    session[:notice] = "Sikeres módosítás!"
+    redirect "/secrets/#{@secret.id}"
+  rescue Sequel::ValidationFailed
+    session[:error] = "Hiba az űrlapban"
+    erb :"secrets/edit"
+  end
+end
+
+get "/secrets/:id/delete" do
+  require_user
+  not_found unless @secret = Secret[params[:id]]
+  error(403, "Nincs ehhez jogosultságod") unless @secret.allowed_to_update?(current_user)
+  erb :"secrets/delete"
+end
+
+delete "/secrets/:id" do
+  require_user
+  not_found unless @secret = Secret[params[:id]]
+  error(403, "Nincs ehhez jogosultságod") unless @secret.allowed_to_update?(current_user)
+  @secret.delete
+  session[:notice] = "Sikeresen törölted a kis titkodat... de ne hidd, hogy így nem jönnek majd rá!"
+  redirect "/secrets"
+end
+
