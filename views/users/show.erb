@@ -10,3 +10,10 @@
   <dd><%= @user.email %></dd>
 <% end %>
 </dl>
+
+<% if @user == current_user %>
+<p>
+  <a href="/users/<%= @user.id %>/edit">szerkesztés</a> |
+  <a href="/users/<%= @user.id %>/delete">törlés</a>
+</p>
+<% end %>

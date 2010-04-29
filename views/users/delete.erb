@@ -1,0 +1,10 @@
+<h2>Saját regisztráció törlése</h2>
+
+<form action="/users/<%= @user.id %>" method="post">
+  <p><input type="hidden" name="_method" value="delete"/></p>
+  <p class="error">Biztos törölni akarod a regisztrációd?</p>
+  <p>
+    <input type="submit" value="Igen"/>, vagy
+    <a href="/users/<%= @user.id %>">inkább mégsem</a>
+  </p>
+</form>

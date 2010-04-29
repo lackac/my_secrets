@@ -7,6 +7,13 @@ helpers do
     @current_user ||= User[session[:current_user_id]]
   end
 
+  def require_user
+    unless logged_in?
+      session[:error] = "Ehhez előbb be kell jelentkezned..."
+      redirect "/"
+    end
+  end
+
   def form_field(label, object, attribute, type="text")
     object_name = object.class.name.downcase
     id = "#{object_name}_#{attribute}"
