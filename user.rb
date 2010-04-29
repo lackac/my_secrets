@@ -20,7 +20,7 @@ class User < Sequel::Model
         errors.add(:login, "már van ilyen nevű felhasználó")
       end
     end
-    unless new? or (password.empty? and password_confirmation.empty?)
+    if new? or (not password.empty? or not password_confirmation.empty?)
       if password.empty?
         errors.add(:password, "nem lehet üres")
       end

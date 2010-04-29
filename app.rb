@@ -78,7 +78,7 @@ put "/users/:id" do
       @user.update_except(params[:user], :login)
       session[:notice] = "Sikeres módosítás!"
       redirect "/users/#{@user.id}"
-    rescue
+    rescue Sequel::ValidationFailed
       session[:error] = "Hiba az űrlapban"
       erb :"users/edit"
     end
