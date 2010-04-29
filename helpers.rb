@@ -14,19 +14,28 @@ helpers do
     end
   end
 
-  def form_field(label, object, attribute, type="text")
+  def form_field(label, object, attribute, type=:text)
     object_name = object.class.name.downcase
     id = "#{object_name}_#{attribute}"
     name = "#{object_name}[#{attribute}]"
     error = object.errors[attribute]
     error = %{<span class="error">#{error}</span>} if error
-    %{
-      <p>
-        <label for="#{id}">#{label}:</label>
-        <input type="#{type}" id="#{id}" name="#{name}" value="#{object[attribute]}"/>
-        #{error}
-      </p>
-    }
+    unless type.to_sym == :textarea
+      %{
+        <p>
+          <label for="#{id}">#{label}:</label>
+          <input type="#{type}" id="#{id}" name="#{name}" value="#{object[attribute]}"/>
+          #{error}
+        </p>
+      }
+    else
+      %{
+        <p>
+          <label for="#{id}">#{label}:</label> #{error}<br/>
+          <textarea id="#{id}" name="#{name}" rows="10" cols="60">#{object[attribute]}</textarea>
+        </p>
+      }
+    end
   end
 end
 
