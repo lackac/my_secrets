@@ -119,7 +119,7 @@ post "/login" do
   if user = User.authenticate(params[:user], params[:pass])
     session[:current_user_id] = user.id
     session[:notice] = "Sikeres bejelentkezés!"
-    redirect "/users/#{user.id}"
+    redirect session.delete(:back_url) || "/"
   else
     session[:error] = "Hibás felhasználónév vagy jelszó"
     redirect "/"

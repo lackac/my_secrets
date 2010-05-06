@@ -9,6 +9,7 @@ helpers do
 
   def require_user
     unless logged_in?
+      session[:back_url] = request.path
       session[:error] = "Ehhez előbb be kell jelentkezned..."
       redirect "/"
     end
