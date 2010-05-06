@@ -99,3 +99,7 @@ a:active  { color: #ca0; }
 .error {
   color: #900;
 }
+
+.placeholder {
+  color: #888;
+}
