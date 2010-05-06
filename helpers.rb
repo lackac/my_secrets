@@ -37,6 +37,11 @@ helpers do
       }
     end
   end
+
+  def secret_li(secret)
+    css_class = secret.allowed_to_view?(current_user) ? "unlocked" : "locked"
+    %{<li class="#{css_class}"><a href="/secrets/#{secret.id}">#{secret.title}</a></li>}
+  end
 end
 
 class NilClass
