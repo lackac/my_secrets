@@ -13,6 +13,7 @@ require 'helpers'
 enable :sessions
 
 get "/" do
+  @secrets = Secret.all
   erb :home
 end
 

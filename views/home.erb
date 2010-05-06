@@ -1,20 +1,17 @@
-<h2>Főoldal</h2>
+<h2>A világ legféltettebben őrzött titkai</h2>
 
 <% unless logged_in? %>
-<form action="/login" method="POST">
-  <fieldset>
-    <legend>Bejelentkezés</legend>
-    <p>
-      <label for="user">Felhasználónév:</label>
-      <input type="text" id="user" name="user" />
-    </p>
-    <p>
-      <label for="pass">Jelszó:</label>
-      <input type="password" id="pass" name="pass" />
-    </p>
-    <p><input type="submit" value="Mehet" /></p>
-  </fieldset>
-</form>
+<p class="error">Jelentkezz be fent, hogy megnézhesd őket!</p>
+<% end %>
+
+<% if @secrets.empty? %>
+<p>Nincsenek?! Gyere vissza később, akkor tuti lesz már egy csomó, vagy akár te is <a href="/secrets/new">lejegyzhetsz egyet</a>.</p>
 <% else %>
-<p><a href="/logout">Kijelentkezés</a></p>
+<a href="/secrets/new">Új titok lejegyzése</a>
+
+<ul class="secrets">
+<%   @secrets.each do |secret| %>
+  <%= secret_li(secret) %>
+<%   end %>
+</ul>
 <% end %>
