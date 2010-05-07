@@ -5,11 +5,11 @@ class Secret < Sequel::Model
   set_allowed_columns :title, :body, :viewer_logins
 
   def allowed_to_view?(user)
-    self.user_id == user.id or self.viewers.include?(user)
+    self.user == user or self.viewers.include?(user)
   end
 
   def allowed_to_update?(user)
-    self.user_id == user.id
+    self.user == user
   end
 
   def viewer_logins
