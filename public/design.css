@@ -103,3 +103,9 @@ a:active  { color: #ca0; }
 .placeholder {
   color: #888;
 }
+
+.hint {
+  color: #888;
+  font-size: 0.9em;
+  font-style: italic;
+}

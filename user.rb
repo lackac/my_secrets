@@ -1,6 +1,9 @@
 require 'digest/sha1'
 
 class User < Sequel::Model
+  one_to_many :secrets
+  many_to_many :viewable_secrets, :join_table => :secret_view_rights, :left_key => :viewer_id, :right_key => :secret_id, :class => :Secret
+
   attr_accessor :password, :password_confirmation
 
   set_allowed_columns :login, :password, :password_confirmation,

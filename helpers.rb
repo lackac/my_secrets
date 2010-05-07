@@ -25,7 +25,7 @@ helpers do
       %{
         <p>
           <label for="#{id}">#{label}:</label>
-          <input type="#{type}" id="#{id}" name="#{name}" value="#{object[attribute]}"/>
+          <input type="#{type}" id="#{id}" name="#{name}" value="#{object.send(attribute)}"/>
           #{error}
         </p>
       }
@@ -33,7 +33,7 @@ helpers do
       %{
         <p>
           <label for="#{id}">#{label}:</label> #{error}<br/>
-          <textarea id="#{id}" name="#{name}" rows="10" cols="60">#{object[attribute]}</textarea>
+          <textarea id="#{id}" name="#{name}" rows="10" cols="60">#{object.send(attribute)}</textarea>
         </p>
       }
     end
